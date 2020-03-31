@@ -1,0 +1,19 @@
+FROM debian:9
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV container docker
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+ADD 00aptproxy /etc/apt/apt.conf.d
+RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt-get -y install apt-utils
+RUN apt-get -y install software-properties-common dirmngr
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+RUN add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirror.ufscar.br/mariadb/repo/10.1/debian stretch main'
+RUN apt-get update
+RUN apt-get -y install mariadb-server
+
+# vim: syn=Dockerfile
+# EOF

@@ -1,0 +1,26 @@
+FROM debian:9
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV container docker
+ENV TERM linux
+# ENV LC_ALL en_US.UTF-8
+# ENV LANG en_US.UTF-8
+# ENV LANGUAGE en_US.UTF-8
+
+RUN echo "Acquire::http::Proxy \"http://172.17.0.1:3142\";" >/etc/apt/apt.conf.d/00aptproxy
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y systemd python \
+    sudo bash ca-certificates python-apt iproute2 xz-utils \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
+    /etc/systemd/system/*.wants/* \
+    /lib/systemd/system/local-fs.target.wants/* \
+    /lib/systemd/system/sockets.target.wants/*udev* \
+    /lib/systemd/system/sockets.target.wants/*initctl* \
+    /lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup* \
+    /lib/systemd/system/systemd-update-utmp*
+
+VOLUME [ "/sys/fs/cgroup" ]
+CMD ["/lib/systemd/systemd"]
