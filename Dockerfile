@@ -14,6 +14,6 @@ RUN git clone --single-branch --branch $BRANCH $REPO ./mariadb-server && \
     cd ./mariadb-server && \
     mk-build-deps -r -i debian/control -t 'apt-get -y -o Debug::pkgProblemResolver=yes \
       --no-install-recommends' && \
-    time env DEB_BUILD_OPTIONS="nocheck" debian/autobake-deb.sh && \
+    time env DEB_BUILD_OPTIONS="parallel=8 nocheck" debian/autobake-deb.sh && \
     cd .. && \
     lintian -EvIL +pedantic --color=always *.changes
