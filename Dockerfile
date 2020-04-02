@@ -26,6 +26,6 @@ RUN set -eux \
       -t 'apt-get -y \
       -o Debug::pkgProblemResolver=yes \
       --no-install-recommends' \
-      && debian/autobake-deb.sh \
+      && env DEB_BUILD_OPTIONS="parallel=4" debian/autobake-deb.sh \
       && cd .. \
       && lintian -EvIL +pedantic --color=always *.changes
