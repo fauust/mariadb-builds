@@ -17,9 +17,7 @@ RUN set -eux \
       git-buildpackage \
       lintian \
       lsb-release \
-      pristine-tar \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+      pristine-tar
 
 RUN set -eux \
     && git clone --single-branch --branch $BRANCH $REPO ./mariadb-server \
@@ -28,8 +26,6 @@ RUN set -eux \
       -t 'apt-get -y \
       -o Debug::pkgProblemResolver=yes \
       --no-install-recommends' \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && env DEB_BUILD_OPTIONS="parallel=2" debian/autobake-deb.sh \
     && cd .. \
     && lintian -EvIL +pedantic --color=always *.changes \
