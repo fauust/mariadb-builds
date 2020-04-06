@@ -1,7 +1,8 @@
 ---
 version: 2.1
 
-workflows:
+jobs:
   build:
-    jobs:
-      - docker build .
+    steps:
+      - checkout
+      - run: docker build .
