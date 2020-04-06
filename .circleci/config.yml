@@ -1,6 +1,10 @@
 ---
 version: 2.1
 
+machine:
+  services:
+    - docker
+
 jobs:
   build:
     steps:
