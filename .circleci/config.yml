@@ -1,12 +1,8 @@
 ---
-version: 2.1
-
-machine:
-  services:
-    - docker
-
+version: 2
 jobs:
   build:
+    machine: true
     steps:
       - checkout
       - run: docker build .
