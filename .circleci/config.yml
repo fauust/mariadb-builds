@@ -5,5 +5,4 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: pwd
-      - run: ls -l
+      - run: docker build .
